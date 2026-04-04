@@ -1,7 +1,7 @@
 # Meshcom-Remote
 Meshcom RX Remote Admin
 
-Arduino Programm für einen Arduino Micrpo Pro oder anderen Mikrocontroller gleicher Bauart.
+Arduino Programm für einen Arduino Micro Pro oder anderen Mikrocontroller gleicher Bauart.
 
 Es ist möglich einen Lora ESP32 (Lilygo Lora T3 V1.6.1 getestet) aus der ferne via HF zu Administrieren.
 Es wird der TX vom Lora ESP32 ausgelesen.
