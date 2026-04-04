@@ -1,4 +1,4 @@
-// RX TX LEDs schaltbar machen
+// RX und TX LEDs auf dem Arduino Micro Pro Board schaltbar machen
 
 void ledTx( boolean on)
 {
