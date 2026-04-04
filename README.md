@@ -11,6 +11,8 @@ Zusätzlich wird der TX Pin vom LoraESP32 mit dem RX Pin des Arduino Micro Pro v
 Zum Triggern des Reboots wird der RST Pin vom Lora32ESP mit dem Pin7 des Arduino Micro Pro verbunden.
 
 Folgende Befehle können via HF an den Node gesendet werden
+
+
 remotereboot -> Startet den Lora ESP via RST Pin am LoraESP32 neu.
 
 
