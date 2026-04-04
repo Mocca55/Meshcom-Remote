@@ -4,7 +4,6 @@ void ledTx( boolean on)
 {
   if( on)
   {
-    // LED an
     pinMode( LED_BUILTIN_TX, OUTPUT);    // TX LED an
     digitalWrite( LED_BUILTIN_TX, LOW);  // TX LED aus    
   }
