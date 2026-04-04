@@ -13,3 +13,20 @@ Zum Triggern des Reboots wird der RST Pin vom Lora32ESP mit dem Pin7 des Arduino
 Folgende Befehle können via HF an den Node gesendet werden
 remotereboot -> Startet den Lora ESP via RST Pin am LoraESP32 neu.
 
+
+
+Pinbelegung
+
+LILYGO LoRa32 (ESP32)                   ARDUINO PRO MICRO
+      +-----------------------+               +-----------------------+
+
+      |                       |               |                       |
+      |   [3V3] Pin ----------|-------------->| [VCC] Pin             | (Stromversorgung 3.3V)
+      |                       |               |                       |
+      |   [GND] Pin ----------|---------------| [GND] Pin             | (Gemeinsame Masse)
+      |                       |               |                       |
+      |   [TX]  Pin ----------|-------------->| [RX1] Pin (0)         | (Daten vom ESP lesen)
+      |                       |               |                       |
+      |   [RST] Pin <---------|---------------| [Pin 7]               | (Reset-Impuls auslösen)
+      |                       |               |                       |
+      +-----------------------+               +-----------------------+
