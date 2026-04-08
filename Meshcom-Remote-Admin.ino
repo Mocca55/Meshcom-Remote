@@ -33,11 +33,13 @@ const int resetPin = 7;
 const char* cmdReboot = "CALL-1>CALL-2:remotereboot";  //hier müssen die Rufzeichen der Meshcom Nodes eingetragen werden Rufzeichen 1 Sender Rufzeichen 2 Empfänger (zu Administrierender Node)
 const char* cmdStarted = "CLIENT STARTED";
 const char* cmdRXLED = "RX-LoRa2";
+const char* cmdTXLED = "TX-LoRa";
 
 // Befehle definieren für Prgramm
 int posReboot = 0;
 int posStarted = 0;
 int posRXLED = 0;
+int posTXLED = 0;
 
 void setup() {
 
@@ -115,6 +117,21 @@ void loop() {
     } else {
       posRXLED = (c == cmdRXLED[0]) ? 1 : 0;
     }
+
+    //5. TX LED bei Senden leuchten "TX-LoRa"
+    if (c == cmdTXLED[posTXLED]) {
+      posTXLED++;
+      if (cmdTXLED[posTXLED] == '\0') {
+        //Serial.println("\n----------\n[Info Arduino] TX Lora Paket.\n----------");  //Aktivieren für eine TX Info Anzeige via Serial
+        posTXLED = 0;
+          ledTx( true);
+          delay(500);
+          ledTx( false);
+      }
+    } else {
+      posTXLED = (c == cmdTXLED[0]) ? 1 : 0;
+    }
+
   }
 }
 
