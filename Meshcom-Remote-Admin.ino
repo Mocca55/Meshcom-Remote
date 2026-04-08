@@ -1,4 +1,4 @@
-// RX und TX LEDs auf dem Arduino Micro Pro Board schaltbar machen
+// RX TX LEDs schaltbar machen
 
 void ledTx( boolean on)
 {
@@ -32,10 +32,12 @@ const int resetPin = 7;
 // RX Befehle und Status Infos
 const char* cmdReboot = "CALL-1>CALL-2:remotereboot";  //hier müssen die Rufzeichen der Meshcom Nodes eingetragen werden Rufzeichen 1 Sender Rufzeichen 2 Empfänger (zu Administrierender Node)
 const char* cmdStarted = "CLIENT STARTED";
+const char* cmdRXLED = "RX-LoRa2";
 
 // Befehle definieren für Prgramm
 int posReboot = 0;
 int posStarted = 0;
+int posRXLED = 0;
 
 void setup() {
 
@@ -98,6 +100,20 @@ void loop() {
       }
     } else {
       posStarted = (c == cmdStarted[0]) ? 1 : 0;
+    }
+
+    //4. RX LED bei Empfang leuchten "RX-LoRa2"
+    if (c == cmdRXLED[posRXLED]) {
+      posRXLED++;
+      if (cmdRXLED[posRXLED] == '\0') {
+        //Serial.println("\n----------\n[Info Arduino] RX Lora Paket.\n----------");  //Aktivieren für eine RX Info Anzeige via Serial
+        posRXLED = 0;
+          ledRx( true);
+          delay(300);
+          ledRx( false);
+      }
+    } else {
+      posRXLED = (c == cmdRXLED[0]) ? 1 : 0;
     }
   }
 }
