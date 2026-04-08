@@ -10,7 +10,12 @@ Damit alles funktioniert wird der 3V und Ground Pin vom LoraESP32 zur Stromverso
 Zusätzlich wird der TX Pin vom LoraESP32 mit dem RX Pin des Arduino Micro Pro verbunden.
 Zum Triggern des Reboots wird der RST Pin vom Lora32ESP mit dem Pin7 des Arduino Micro Pro verbunden.
 
-Die Board LED blink je nach Aktion:
+LEDs RX / TX / Power 
+RX LED befindet sich beim PIN7 auf dem Board
+TX-LED befindet sich bei Pin14 auf dem Board
+Power LED befindet sich beim USB Anschluss auf dem Board
+
+Die Board LEDs blinken je nach Aktion:
 RX Lora Paket -> RX-LED 1x kurz blinken
 TX Lora PAket -> TX-LED 1x kurz blinken
 Node Remotereboot -> RX-LED 2x kurz blinken
