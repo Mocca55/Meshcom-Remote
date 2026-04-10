@@ -35,7 +35,7 @@ const char* cmdStarted = "CLIENT STARTED";
 const char* cmdRXLED = "RX-LoRa2";
 const char* cmdTXLED = "TX-LoRa";
 
-// Befehle definieren für Prgramm
+// Befehle definieren für Programm
 int posReboot = 0;
 int posStarted = 0;
 int posRXLED = 0;
@@ -113,6 +113,8 @@ void loop() {
           ledRx( true);
           delay(300);
           ledRx( false);
+          //delay(1000); //Zum Energie Sparen Display nach 1 Sek aus
+          //Serial1.println("--Display off"); //Zum Energie Sparen Display aus
       }
     } else {
       posRXLED = (c == cmdRXLED[0]) ? 1 : 0;
@@ -137,9 +139,10 @@ void loop() {
 
 void executeReset() {
   Serial.println("\n----------\n[Info Arduino] Lora Remotereboot Befehl erkannt der Reset-Impuls wird ausgelöst!\n----------");
-  digitalWrite(resetPin, LOW);
-  delay(100);
-  digitalWrite(resetPin, HIGH);
+  digitalWrite(resetPin, LOW); //Reboot via Pin 7
+  delay(100); //Reboot via Pin 7
+  digitalWrite(resetPin, HIGH); //Reboot via Pin 7
+  //Serial1.println("--reboot"); //Alternativ kann der Node auch via Serialbefehl neu gestartet werden
           ledRx( true);
           delay(200);
           ledRx( false);
