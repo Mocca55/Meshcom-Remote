@@ -30,6 +30,7 @@ remotereboot -> Startet den Lora ESP via RST Pin am LoraESP32 neu.
 
 
 Pinbelegung
+
        ARDUINO PRO MICRO                         LILYGO LoRa32 (ESP32)
     +-----------------------+                 +-----------------------+
 
