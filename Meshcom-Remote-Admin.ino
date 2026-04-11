@@ -1,4 +1,4 @@
-// RX TX LEDs schaltbar machen
+// RX und TX LEDs auf dem Arduino Pro Micro Bpoard steuerbar machen
 
 void ledTx( boolean on)
 {
@@ -29,13 +29,13 @@ void ledRx( boolean on)
 //Reset Pin am Arduino Micro Pro zuweisen Pin7
 const int resetPin = 7;
 
-// RX Befehle und Status Infos
+// RX und TX Befehle und Status Infos definieren
 const char* cmdReboot = "CALL-1>CALL-2:remotereboot";  //hier müssen die Rufzeichen der Meshcom Nodes eingetragen werden Rufzeichen 1 Sender Rufzeichen 2 Empfänger (zu Administrierender Node)
-const char* cmdStarted = "CLIENT STARTED";
-const char* cmdRXLED = "RX-LoRa2";
-const char* cmdTXLED = "TX-LoRa";
+const char* cmdStarted = "CLIENT STARTED";  // Prüfen oder der Node erfolgreich gestartet ist
+const char* cmdRXLED = "RX-LoRa2"; // RX LED funktion beim Empfang kurz blinken
+const char* cmdTXLED = "TX-LoRa"; // TX LED beim Senden kurz blinken
 
-// Befehle definieren für Programm
+// Status der Befehle definieren
 int posReboot = 0;
 int posStarted = 0;
 int posRXLED = 0;
@@ -44,26 +44,26 @@ int posTXLED = 0;
 void setup() {
 
 
-// LEDs abschalten
+// Arduino Pro Micro Board-LEDs abschalten
   delay(500);
   ledTx( false);
   delay(500);
   ledRx( false);
 
 
-  // Baudrate muss ggleich sein bei Serial und Serial1 (ESP32 115200)
+  // Seial Baudrate definieren, muss gleich sein bei Serial und Serial1 für Meshcom wir 115200 verwendet
   Serial.begin(115200);
   Serial1.begin(115200);
 
   pinMode(resetPin, OUTPUT);
   digitalWrite(resetPin, HIGH);
 
-  //while (!Serial); //abschalten bei Nutzung ohne PC
+  //while (!Serial); //Warten auf Serial USB VErbindung -> ---------- Achtung bei Nutzung ohne PC muss es auskommentiert werden ----------
   Serial.println("[Info Arduino] Überwachung aktiv (RX Pin vom Lilygo Lora32 ESP wird ausgelesen)...");
 }
 
 void loop() {
-  // Verarbeitund der Werte
+  // Verarbeitung der RX Befehle
   while (Serial1.available() > 0) {
     char c = (char)Serial1.read();
     
@@ -78,7 +78,7 @@ void loop() {
         posReboot = 0;
       }
     } else {
-      // Falls Zeichen nicht passt, zurücksetzen (oder auf Anfang prüfen)
+      // Falls nicht erkannt, zurücksetzen
       posReboot = (c == cmdReboot[0]) ? 1 : 0;
     }
 
@@ -86,7 +86,7 @@ void loop() {
     if (c == cmdStarted[posStarted]) {
       posStarted++;
       if (cmdStarted[posStarted] == '\0') {
-        Serial.println("\n----------\n[Info Arduino] Lora ESP32 Node gestartet und bereit.\n----------");
+        Serial.println("\n----------\n[Info Arduino] Lora ESP32 Node gestartet und bereit.\n----------"); //Beim erfolgreichem Start des lora Nodes Blinkt das RX LED 3x kurz
         posStarted = 0;
           ledRx( true);
           delay(200);
@@ -150,7 +150,7 @@ void executeReset() {
           ledRx( true);
           delay(200);
           ledRx( false);
-  // Nach Reset kurz warten, um Datenmüll während des Neustarts zu ignorieren
+  // Nach Reset kurz warten, um fehlerhaftes lesen des RX Pins während des Neustarts zu ignorieren
   posReboot = 0;
   posStarted = 0;
 }
