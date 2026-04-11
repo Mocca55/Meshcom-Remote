@@ -10,7 +10,9 @@ Es wird der TX Pin vom Lora ESP32 ausgelesen.
 
 Wichtig am Lora Node müssen folgende Serial Ausgaben aktiviert werden (zum aktivieren folgende Commands in der Serial Console eingeben)
 --softserread on
+
 --loradebug on
+
 
 
 !!! Wichtig beim Verbinden des TX vom Arduino Pro Micro mit dem RX Pin des Lilygo Lora 32 !!!
