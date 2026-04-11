@@ -6,9 +6,18 @@ Arduino Programm für einen Arduino Micro Pro oder anderen Mikrocontroller gleic
 Es ist möglich einen Lora ESP32 (Lilygo Lora T3 V1.6.1 getestet) aus der ferne via HF zu Administrieren.
 Es wird der TX Pin vom Lora ESP32 ausgelesen.
 
+---------- WICHTIGE HINWEISE ----------
+
 Wichtig am Lora Node müssen folgende Serial Ausgaben aktiviert werden (zum aktivieren folgende Commands in der Serial Console eingeben)
 --softserread on
 --loradebug on
+
+
+!!! Wichtig beim Verbinden des TX vom Arduino Pro Micro mit dem RX Pin des Lilygo Lora 32 !!!
+Hier muss zwischen TX und RX Pin ein 3k Ohm Wiederstand eingesetzt werden und auf den 3.3V Pegel zu kommen, da der Arduino mit 5V Pegel arbeitet.
+Ohne Wiederstand Riskiert man eine Beschädigung des Lilygo Lora 32.
+
+---------- ENDE DER WICHTIGEN HINWEISE ----------
 
 Damit alles funktioniert wird der 3V und Ground Pin vom LoraESP32 zur Stromversorgung des Arduino Micro Pro genutzt.
 Zusätzlich wird der TX Pin vom LoraESP32 mit dem RX Pin des Arduino Micro Pro verbunden.
