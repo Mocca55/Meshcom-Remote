@@ -1,3 +1,6 @@
+#include "config.h"
+
+
 // RX und TX LEDs auf dem Arduino Pro Micro Bpoard steuerbar machen
 
 void ledTx( boolean on)
@@ -31,14 +34,14 @@ const int resetPin = 7;
 
 
 //---------- Setup Main und Remote Node --------- Hier müssen die Rufzeichen der Nodes Call1 Main Node und Call2 RemoteNode zu Administrierender Node eingetragen werden.
-String MainNode = ("CALL-1");
-String RemoteNode = ("CALL-2");
-
+//String MainNode = ("DK6MM-1");
+//String RemoteNode = ("DK6MM-2");
 
 
 
 // RX und TX Befehle und Status Infos definieren
 String cmdRebootConfig = MainNode + ">" + RemoteNode + ":remotereboot";  //Reboot Infos aus den Call Strings zusammenfügen
+String NodeRestartInfo = "::{" + MainNode + "}" + RemoteNode + " wurde erfolgreich neugestartet."; //Neustart TX Nachricht
 
 const char* cmdReboot = cmdRebootConfig.c_str();
 const char* cmdStarted = "CLIENT STARTED";  // Prüfen oder der Node erfolgreich gestartet ist
@@ -109,6 +112,7 @@ void loop() {
           ledRx( true);
           delay(200);
           ledRx( false);
+          //Serial1.println("::{DK6MM-1}DK6MM-99 wurde erfolgreich neu gestartet");
       }
     } else {
       posStarted = (c == cmdStarted[0]) ? 1 : 0;
@@ -163,4 +167,6 @@ void executeReset() {
   // Nach Reset kurz warten, um fehlerhaftes lesen des RX Pins während des Neustarts zu ignorieren
   posReboot = 0;
   posStarted = 0;
+  delay(15000);
+  Serial1.println(NodeRestartInfo.c_str());
 }
