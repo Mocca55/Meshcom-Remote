@@ -99,7 +99,8 @@ void loop() {
     if (c == cmdStarted[posStarted]) {
       posStarted++;
       if (cmdStarted[posStarted] == '\0') {
-        Serial.println("\n----------\n[Info Arduino V1.0.2] Lora ESP32 Node gestartet und bereit.\n----------"); //Beim erfolgreichem Start des lora Nodes Blinkt das RX LED 3x kurz
+        Serial.println("\n----------\n[Info Arduino] Lora ESP32 Node gestartet und bereit.\n----------"); //Beim erfolgreichem Start des lora Nodes Blinkt das RX LED 3x kurz
+        Serial.println(RemoteVersion);
         posStarted = 0;
           ledRx( true);
           delay(200);
