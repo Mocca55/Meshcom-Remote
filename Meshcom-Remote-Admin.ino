@@ -29,8 +29,18 @@ void ledRx( boolean on)
 //Reset Pin am Arduino Micro Pro zuweisen Pin7
 const int resetPin = 7;
 
+
+//---------- Setup Main und Remote Node --------- Hier müssen die Rufzeichen der Nodes Call1 Main Node und Call2 RemoteNode zu Administrierender Node eingetragen werden.
+String MainNode = ("DK6MM-1");
+String RemoteNode = ("DK6MM-2");
+
+
+
+
 // RX und TX Befehle und Status Infos definieren
-const char* cmdReboot = "CALL-1>CALL-2:remotereboot";  //hier müssen die Rufzeichen der Meshcom Nodes eingetragen werden Rufzeichen 1 Sender Rufzeichen 2 Empfänger (zu Administrierender Node)
+String cmdRebootConfig = MainNode + ">" + RemoteNode + ":remotereboot";  //Reboot Infos aus den Call Strings zusammenfügen
+
+const char* cmdReboot = cmdRebootConfig.c_str();
 const char* cmdStarted = "CLIENT STARTED";  // Prüfen oder der Node erfolgreich gestartet ist
 const char* cmdRXLED = "RX-LoRa2"; // RX LED funktion beim Empfang kurz blinken
 const char* cmdTXLED = "TX-LoRa"; // TX LED beim Senden kurz blinken
@@ -86,7 +96,7 @@ void loop() {
     if (c == cmdStarted[posStarted]) {
       posStarted++;
       if (cmdStarted[posStarted] == '\0') {
-        Serial.println("\n----------\n[Info Arduino] Lora ESP32 Node gestartet und bereit.\n----------"); //Beim erfolgreichem Start des lora Nodes Blinkt das RX LED 3x kurz
+        Serial.println("\n----------\n[Info Arduino V1.0.2] Lora ESP32 Node gestartet und bereit.\n----------"); //Beim erfolgreichem Start des lora Nodes Blinkt das RX LED 3x kurz
         posStarted = 0;
           ledRx( true);
           delay(200);
