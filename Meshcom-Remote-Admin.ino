@@ -40,15 +40,15 @@ const int resetPin = 7;
 
 
 // RX und TX Befehle und Status Infos definieren
-String cmdRebootConfig = MainNode + ">" + RemoteNode + ":remotereboot";  //Reboot Infos aus den Call Strings zusammenfügen
-String NodeRestartInfo = "::{" + MainNode + "}" + RemoteNode + " wurde erfolgreich neugestartet."; //Neustart TX Nachricht
+String cmdRebootConfig = MainNode + ">" + RemoteNode + ":remotereboot";  //Zusammensetzen der Reboot Infos aus den Call Strings
+String NodeRestartInfo = "::{" + MainNode + "}" + RemoteNode + " wurde erfolgreich neugestartet."; //Zusammensetzen der Neustart TX Nachricht
 
 const char* cmdReboot = cmdRebootConfig.c_str();
 const char* cmdStarted = "CLIENT STARTED";  // Prüfen oder der Node erfolgreich gestartet ist
 const char* cmdRXLED = "RX-LoRa2"; // RX LED funktion beim Empfang kurz blinken
 const char* cmdTXLED = "TX-LoRa"; // TX LED beim Senden kurz blinken
 
-// Status der Befehle definieren
+// Variable der Befehle definieren
 int posReboot = 0;
 int posStarted = 0;
 int posRXLED = 0;
@@ -65,14 +65,14 @@ void setup() {
 
 
   // Seial Baudrate definieren, muss gleich sein bei Serial und Serial1 für Meshcom wir 115200 verwendet
-  Serial.begin(115200);
-  Serial1.begin(115200);
+  Serial.begin(115200); //Baudrate für USB
+  Serial1.begin(115200); //Baudrate für den RX / TX Pin auf dem Board
 
   pinMode(resetPin, OUTPUT);
   digitalWrite(resetPin, HIGH);
 
   //while (!Serial); //Warten auf Serial USB VErbindung -> ---------- Achtung bei Nutzung ohne PC muss es auskommentiert werden ----------
-  Serial.println("[Info Arduino] Überwachung aktiv (RX Pin vom Lilygo Lora32 ESP wird ausgelesen)...");
+  Serial.println("----------\n[Info Arduino] Überwachung aktiv (RX Pin vom Lilygo Lora32 ESP wird ausgelesen)\n----------");
 }
 
 void loop() {
