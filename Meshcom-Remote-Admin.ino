@@ -34,8 +34,8 @@ const int resetPin = 7;
 
 
 //---------- Setup Main und Remote Node --------- Hier müssen die Rufzeichen der Nodes Call1 Main Node und Call2 RemoteNode zu Administrierender Node eingetragen werden.
-//String MainNode = ("DK6MM-1");
-//String RemoteNode = ("DK6MM-2");
+//String MainNode = ("CALL-1");
+//String RemoteNode = ("CALL-2");
 
 
 
@@ -112,7 +112,6 @@ void loop() {
           ledRx( true);
           delay(200);
           ledRx( false);
-          //Serial1.println("::{DK6MM-1}DK6MM-99 wurde erfolgreich neu gestartet");
       }
     } else {
       posStarted = (c == cmdStarted[0]) ? 1 : 0;
