@@ -44,7 +44,7 @@ void setup() {
   digitalWrite(resetPin, HIGH);
 
   //while (!Serial); //Warten auf Serial USB VErbindung -> ---------- Achtung bei Nutzung ohne PC muss es auskommentiert werden ----------
-  Serial.println("----------\n[Info Arduino] Überwachung aktiv (RX Pin vom Lilygo Lora32 ESP wird ausgelesen)\n----------");
+  Serial.println("\n\n----------\n[Info Arduino] Überwachung aktiv " + RemoteVersion + " (RX Pin vom Lilygo Lora32 ESP wird ausgelesen)\n----------\n\n");
 }
 
 void loop() {
