@@ -4,4 +4,4 @@ String MainNode = ("CALL-1"); //Main Node
 
 String RemoteNode = ("CALL-2"); //Remote Node
 
-String RemoteVersion = ("Meshcom Remote V1.0.2"); //Versionsinfo
+String RemoteVersion = ("Meshcom Remote V1.0.3"); //Versionsinfo
