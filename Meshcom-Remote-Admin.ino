@@ -1,49 +1,17 @@
 #include "config.h"
+#include "BoardLEDs.h"
 
-
-// RX und TX LEDs auf dem Arduino Pro Micro Bpoard steuerbar machen
-
-void ledTx( boolean on)
-{
-  if( on)
-  {
-    pinMode( LED_BUILTIN_TX, OUTPUT);    // TX LED an
-    digitalWrite( LED_BUILTIN_TX, LOW);  // TX LED aus    
-  }
-  else
-  {
-    pinMode( LED_BUILTIN_TX, INPUT);
-  }
-}
-
-void ledRx( boolean on)
-{
-  if( on)
-  {
-    pinMode( LED_BUILTIN_RX, OUTPUT);  // RX LED an
-    digitalWrite( LED_BUILTIN_RX, LOW); // RX LED aus
-  }
-  else
-  {
-    pinMode( LED_BUILTIN_RX, INPUT);    
-  }
-}
-
-//Reset Pin am Arduino Micro Pro zuweisen Pin7
+//Pin am Arduino Micro Pro zuweisen um den ESP RST Pin zu Triggern -> Pin7
 const int resetPin = 7;
-
-
-//---------- Setup Main und Remote Node --------- Hier müssen die Rufzeichen der Nodes Call1 Main Node und Call2 RemoteNode zu Administrierender Node eingetragen werden.
-//String MainNode = ("CALL-1");
-//String RemoteNode = ("CALL-2");
-
 
 
 // RX und TX Befehle und Status Infos definieren
 String cmdRebootConfig = MainNode + ">" + RemoteNode + ":remotereboot";  //Zusammensetzen der Reboot Infos aus den Call Strings
+String cmdSendPosConfig = MainNode + ">" + RemoteNode + ":sendpos";  //Zusammensetzen SendPos -> Bake Senden mit Position
 String NodeRestartInfo = "::{" + MainNode + "}" + RemoteNode + " wurde erfolgreich neugestartet."; //Zusammensetzen der Neustart TX Nachricht
 
 const char* cmdReboot = cmdRebootConfig.c_str();
+const char* cmdSendPos = cmdSendPosConfig.c_str();
 const char* cmdStarted = "CLIENT STARTED";  // Prüfen oder der Node erfolgreich gestartet ist
 const char* cmdRXLED = "RX-LoRa2"; // RX LED funktion beim Empfang kurz blinken
 const char* cmdTXLED = "TX-LoRa"; // TX LED beim Senden kurz blinken
@@ -53,20 +21,24 @@ int posReboot = 0;
 int posStarted = 0;
 int posRXLED = 0;
 int posTXLED = 0;
+int posSendPos = 0;
+
 
 void setup() {
 
 
-// Arduino Pro Micro Board-LEDs abschalten
+// Arduino Pro Micro Board-LEDs abschalten zum Energie Sparen und um die Funktionen RX TX LEDs zu nutzen
   delay(500);
   ledTx( false);
   delay(500);
   ledRx( false);
+  
 
-
-  // Seial Baudrate definieren, muss gleich sein bei Serial und Serial1 für Meshcom wir 115200 verwendet
+// Seial Baudrate definieren, muss gleich sein bei Serial und Serial1 für Meshcom wir 115200 verwendet
   Serial.begin(115200); //Baudrate für USB
   Serial1.begin(115200); //Baudrate für den RX / TX Pin auf dem Board
+
+  Serial1.println("--Display off"); //Display aus zum Energie sparen
 
   pinMode(resetPin, OUTPUT);
   digitalWrite(resetPin, HIGH);
@@ -127,8 +99,8 @@ void loop() {
           ledRx( true);
           delay(300);
           ledRx( false);
-          //delay(1000); //Zum Energie Sparen Display nach 1 Sek aus
-          //Serial1.println("--Display off"); //Zum Energie Sparen Display aus
+          delay(5000); //Zum Energie Sparen Display nach 5 Sek aus
+          Serial1.println("--Display off"); //Zum Energie Sparen Display aus
       }
     } else {
       posRXLED = (c == cmdRXLED[0]) ? 1 : 0;
@@ -146,6 +118,32 @@ void loop() {
       }
     } else {
       posTXLED = (c == cmdTXLED[0]) ? 1 : 0;
+    }
+
+
+        //5. Manuelles aussende der Position -> SendPos
+    if (c == cmdSendPos[posSendPos]) {
+      posSendPos++;
+      if (cmdSendPos[posSendPos] == '\0') {
+        //Serial.println("\n----------\n[Info Arduino] TX SendPos\n----------");  //Aktivieren für eine SendPos Info Anzeige via Serial
+        posSendPos = 0;
+          ledTx( true);
+          ledRx( true);
+          delay(200);
+          ledTx( false);
+          ledRx( false);
+          delay(200);
+          ledTx( true);
+          ledRx( true);
+          delay(200);
+          ledTx( false);
+          ledRx( false);
+          Serial1.println("--sendpos");//Sende den Serial Befehl --sendpos
+          //delay(1000); //Zum Energie Sparen Display nach 1 Sek aus
+          //Serial1.println("--Display off"); //Zum Energie Sparen Display aus
+      }
+    } else {
+      posSendPos = (c == cmdSendPos[0]) ? 1 : 0;
     }
 
   }
