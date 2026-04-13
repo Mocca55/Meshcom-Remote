@@ -35,6 +35,7 @@ RX Lora Paket -> RX-LED 1x kurz blinken
 TX Lora PAket -> TX-LED 1x kurz blinken
 Node Remotereboot -> RX-LED 2x kurz blinken
 Node erfolgreich gestartet -> RX-LED 3x kurz blinken
+SendPos -> RX+TX 2x kurz blinken
 
 
 
