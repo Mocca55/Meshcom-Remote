@@ -42,7 +42,7 @@ SendPos -> RX+TX 2x kurz blinken
 Folgende Befehle können via HF an den Node gesendet werden
 
 remotereboot -> Startet den Lora ESP via RST Pin am LoraESP32 neu.
-
+sendpos -> Sendet manuell ein Positionspaket an Meshcom und APRS.fi via HF
 
 
 Pinbelegung
